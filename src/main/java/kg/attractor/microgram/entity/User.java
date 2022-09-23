@@ -1,8 +1,12 @@
-package kg.attractor.microgram.microgram;
+package kg.attractor.microgram.entity;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
+@RequiredArgsConstructor
+@Builder
 public class User {
     private int id;
     private String name;

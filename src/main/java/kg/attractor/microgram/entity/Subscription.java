@@ -1,4 +1,4 @@
-package kg.attractor.microgram.microgram;
+package kg.attractor.microgram.entity;
 
 import lombok.Data;
 

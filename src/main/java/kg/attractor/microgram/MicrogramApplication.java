@@ -1,6 +1,5 @@
 package kg.attractor.microgram;
 
-import kg.attractor.microgram.microgram.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

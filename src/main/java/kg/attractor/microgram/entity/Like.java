@@ -5,6 +5,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 @Data
 public class Like {
+    private int id;
     private User user;
     private Publication publication;
     private LocalDateTime time;

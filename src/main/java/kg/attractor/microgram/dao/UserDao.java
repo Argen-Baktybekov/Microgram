@@ -18,4 +18,13 @@ public class UserDao {
         return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(User.class));
     }
 
+    public List<User> getUserByEmail(String email){
+        String query = String.format("select * from users where email = '%s' ", email) ;
+        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(User.class));
+    }
+    public List<User> getUserByName(String nickName){
+        String query = String.format("select * from users where email = '%s' ", nickName) ;
+        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(User.class));
+    }
+
 }

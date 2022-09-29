@@ -2,41 +2,23 @@ package kg.attractor.microgram.entity;
 
 import lombok.Data;
 
+import java.security.PrivateKey;
 import java.time.LocalDateTime;
 @Data
 public class Comment {
     private int id;
+    private User user;
+    private Publication publication;
     private String text;
     private LocalDateTime CommentDateTime;
 
-    public Comment(int id, String text, LocalDateTime commentDateTime) {
+    public Comment(int id, User user, Publication publication, String text, LocalDateTime commentDateTime) {
         this.id = id;
+        this.user = user;
+        this.publication = publication;
         this.text = text;
         CommentDateTime = commentDateTime;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public LocalDateTime getCommentDateTime() {
-        return CommentDateTime;
-    }
-
-    public void setCommentDateTime(LocalDateTime commentDateTime) {
-        CommentDateTime = commentDateTime;
-    }
 }
 

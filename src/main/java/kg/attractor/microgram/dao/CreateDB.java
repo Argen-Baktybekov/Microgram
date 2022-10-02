@@ -1,6 +1,7 @@
 package kg.attractor.microgram.dao;
 
 import kg.attractor.microgram.entity.User;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -9,12 +10,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 @Component
+//@NoArgsConstructor
 @RequiredArgsConstructor
 public class CreateDB {
     private final JdbcTemplate jdbcTemplate;
 
-    public void creataDB(){
-        String query = "if not exist\n" +
+    public void createDB(){
+        String query =
                 "CREATE TABLE users\n" +
                 "(\n" +
                 "    id              SERIAL      NOT NULL primary key,\n" +
@@ -27,7 +29,7 @@ public class CreateDB {
                 "    subscribers_count   float DEFAULT NULL\n" +
                 "\n" +
                 ");\n" +
-                "if not exist\n" +
+
                 "CREATE TABLE publications\n" +
                 "(\n" +
                 "    id          SERIAL NOT NULL primary key,\n" +
@@ -38,7 +40,7 @@ public class CreateDB {
                 "    description text,\n" +
                 "    date        timestamp    DEFAULT NULL\n" +
                 ");\n" +
-                "if not exist\n" +
+
                 "CREATE TABLE comments\n" +
                 "(\n" +
                 "    id     SERIAL NOT NULL primary key ,\n" +
@@ -51,7 +53,7 @@ public class CreateDB {
                 "    text           text,\n" +
                 "    date           timestamp DEFAULT NULL\n" +
                 ");\n" +
-                "if not exist\n" +
+
                 "CREATE TABLE likes\n" +
                 "(\n" +
                 "    id        SERIAL NOT NULL primary key ,\n" +
@@ -63,10 +65,7 @@ public class CreateDB {
                 "            ON DELETE CASCADE ON UPDATE CASCADE,\n" +
                 "    date           timestamp DEFAULT NULL\n" +
                 ");\n" +
-                "\n" +
-                " \n" +
-                "    \n" +
-                "if not exist\n" +
+
                 "CREATE TABLE subscriptions\n" +
                 "(\n" +
                 "    id     SERIAL not null primary key ,\n" +
@@ -78,14 +77,17 @@ public class CreateDB {
                 "            ON DELETE CASCADE ON UPDATE CASCADE,\n" +
                 "    date                 timestamp NOT NULL\n" +
                 ");";
-        jdbcTemplate.execute(query);
+        jdbcTemplate.update(query);
     }
 
     public void addTestDataDB(){
-    String query="INSERT INTO users\n" +
-            "    VALUES(11, 'Argen','Argen', 'a@gmail.com', 'qwerty', 3, 3,3);"+
+    String query="\n" +
+            "INSERT INTO users\n" +
+            "    VALUES(11, 'Argen','Argen', 'argen@gmail.com', 'qwerty', 3, 3,3);"+
+            "\n" +
             " INSERT INTO users\n" +
-            "    VALUES(12, 'Alex', 'Alex', 'a@gmail.com', 'qwerty', 3, 3,3);"+
+            "    VALUES(12, 'Alex', 'Alex', 'alex@gmail.com', 'qwerty', 3, 3,3);"+
+            "\n" +
             " INSERT INTO users\n" +
             "    VALUES(13, 'Brain','Brain', 'b@gmail.com', 'qwerty', 3, 3,3);"+
             "\n" +
@@ -155,6 +157,6 @@ public class CreateDB {
             "insert into likes\n" +
             "values (13, 13, 11, date(now()));";
 
-        jdbcTemplate.execute(query);
+        jdbcTemplate.update(query);
     }
 }

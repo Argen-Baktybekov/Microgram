@@ -22,20 +22,20 @@ private final UserService service;
 
     @GetMapping("/user/{email}")
     public ResponseEntity<UserDto> userByEmail(@PathVariable String email){
-        return new ResponseEntity<UserDto>(service.getUsersByEmail(email), HttpStatus.OK);
+        return new ResponseEntity<>(service.getUsersByEmail(email), HttpStatus.OK);
     }
 
-    @GetMapping("/user/{name}")
+    @GetMapping("/user/name/{name}")
     public ResponseEntity<UserDto> userByName(@PathVariable String name){
-        return new ResponseEntity<UserDto>(service.getUsersByName(name), HttpStatus.OK);
+        return new ResponseEntity<>(service.getUsersByName(name), HttpStatus.OK);
     }
 
-    @GetMapping("/user/{nickName}")
+    @GetMapping("/user/nickname/{nickName}")
     public ResponseEntity<UserDto> userByNickName(@PathVariable String nickName){
-        return new ResponseEntity<UserDto>(service.getUsersByNickName(nickName), HttpStatus.OK);
+        return new ResponseEntity<>(service.getUsersByNickName(nickName), HttpStatus.OK);
     }
 
-    @GetMapping("/user/{email}")
+    @GetMapping("/user/check/{email}")
     public ResponseEntity<Boolean> isUserByEmail(@PathVariable String email){
         return new ResponseEntity<Boolean>(service.isUsersByEmail(email), HttpStatus.OK);
     }

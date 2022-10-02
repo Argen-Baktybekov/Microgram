@@ -18,7 +18,7 @@ import java.util.List;
 public class PublicationController {
 private final PublicationService service;
 
-    @GetMapping("/publications")
+    @GetMapping("/publications/{id}")
     public ResponseEntity<List<PublicationDto>> publications(@PathVariable String id) {
         int userId= Integer.parseInt(id);
         return new ResponseEntity<>(service.getAllPublication(userId), HttpStatus.OK);

@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Data
 public class PublicationDto {
     private int id;
-    private User user;
+    private UserDto user;
     private String imageLink;
     private String description;
     private LocalDateTime PublicationDateTime;

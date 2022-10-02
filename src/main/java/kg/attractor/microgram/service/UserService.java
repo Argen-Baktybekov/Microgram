@@ -18,37 +18,22 @@ public class UserService {
         List<User> users =userDao.getAllUsers();
         List<UserDto> userDtos = new ArrayList<>();
         for (User usr:users) {
-            UserDto userDto = new UserDto();
-            userDto.setName(usr.getName());
-            userDto.setNickName(usr.getNickName());
-            userDto.setEmail(usr.getEmail());
+            UserDto userDto = makeUserDto(usr);
             userDtos.add(userDto);
         }
         return userDtos;
     }
     public UserDto getUsersByEmail(String email){
         User usr = userDao.getUserByEmail(email).get(0);
-        UserDto userDto = new UserDto();
-        userDto.setName(usr.getName());
-        userDto.setNickName(usr.getNickName());
-        userDto.setEmail(usr.getEmail());
-        return userDto;
+        return makeUserDto(usr);
     }
     public UserDto getUsersByName(String name){
-        User usr = userDao.getUserByName(name).get(0);
-        UserDto userDto = new UserDto();
-        userDto.setName(usr.getName());
-        userDto.setNickName(usr.getNickName());
-        userDto.setEmail(usr.getEmail());
-        return userDto;
+        User usr = userDao.getUserByName(name);
+        return makeUserDto(usr);
     }
     public UserDto getUsersByNickName(String nickName){
-        User usr = userDao.getUserByName(nickName).get(0);
-        UserDto userDto = new UserDto();
-        userDto.setName(usr.getName());
-        userDto.setNickName(usr.getNickName());
-        userDto.setEmail(usr.getEmail());
-        return userDto;
+        User usr = userDao.getUserByNickName(nickName);
+        return makeUserDto(usr);
     }
 
     public Boolean isUsersByEmail(String email){
@@ -56,6 +41,14 @@ public class UserService {
        if (users.size()>0){
            return true;
        }else return false;
+    }
+
+    public static UserDto makeUserDto(User user){
+        UserDto userDto = new UserDto();
+        userDto.setName(user.getName());
+        userDto.setNickName(user.getNickName());
+        userDto.setEmail(user.getEmail());
+        return userDto;
     }
 }
 

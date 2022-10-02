@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Data
 public class LikeDto {
     private int id;
-    private User user;
-    private Publication publication;
+    private UserDto user;
+    private PublicationDto publication;
     private LocalDateTime time;
 }

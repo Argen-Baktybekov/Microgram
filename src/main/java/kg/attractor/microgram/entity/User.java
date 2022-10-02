@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 //@Builder
 @Data
 public class User {

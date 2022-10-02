@@ -1,6 +1,5 @@
 package kg.attractor.microgram.controller;
 
-import kg.attractor.microgram.entity.User;
 import kg.attractor.microgram.service.DBConnection;
 import kg.attractor.microgram.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,17 +16,13 @@ public class ConnectionController {
     private final DBConnection dbConnection;
     final UserService dBservice;
 
-    @GetMapping("/connect")
-    public ResponseEntity<String> getConnection(){
-    return new  ResponseEntity<>(dbConnection.openConnection(), HttpStatus.OK);
-    }
     @GetMapping("/create")
     public ResponseEntity<String> createTable(){
         return new ResponseEntity<>(dbConnection.createNewDB(), HttpStatus.OK);
     }
     @GetMapping("/addtestdata")
     public ResponseEntity<String> addTestData(){
-        return new ResponseEntity<>(dbConnection.createNewDB(), HttpStatus.OK);
+        return new ResponseEntity<>(dbConnection.addTestData(), HttpStatus.OK);
     }
 
 

@@ -6,8 +6,10 @@ import kg.attractor.microgram.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -45,10 +47,33 @@ public class UserService {
 
     public static UserDto makeUserDto(User user){
         UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
         userDto.setName(user.getName());
         userDto.setNickName(user.getNickName());
         userDto.setEmail(user.getEmail());
         return userDto;
+    }
+
+    public String addUser(User user) {
+        try {
+        userDao.addUser(user);
+        return "Ok";
+        }catch (Exception e){
+           return e.getMessage();
+        }
+    }
+
+    public String authUser(String email, String password) {
+        try {
+           Optional<User> optional= Optional.of(userDao.authUser(email, password));
+            if (optional.isPresent()) {
+                return "Ok";
+            }else {
+                throw new SQLException();
+            }
+        }catch (SQLException e){
+            return e.getMessage();
+        }
     }
 }
 

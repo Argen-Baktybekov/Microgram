@@ -57,4 +57,22 @@ List<Publication> publications = publicationDao.getAllPublication(id);
         publicationDto.setPublicationDateTime(pb.getPublicationDateTime());
         return publicationDto;
     }
+
+    public String addPuplication(PublicationDto publicationDto) {
+        try {
+            publicationDao.addPublication(publicationDto);
+            return "Ok";
+        }catch (Exception e){
+            return e.getMessage();
+        }
+    }
+
+    public String deletePublication(int userId, int pubId) {
+        try {
+            publicationDao.deletePublication(userId, pubId);
+            return "Ok";
+        }catch (Exception e){
+            return e.getMessage();
+        }
+    }
 }

@@ -1,34 +1,38 @@
 package kg.attractor.microgram.dao;
 
 import kg.attractor.microgram.entity.User;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 @Component
 //@NoArgsConstructor
 @RequiredArgsConstructor
+
 public class CreateDB {
     private final JdbcTemplate jdbcTemplate;
+    private final PasswordEncoder passwordEncoder;
+
 
     public void createDB(){
         String query =
                 "CREATE TABLE users\n" +
                 "(\n" +
-                "    id              SERIAL      NOT NULL primary key,\n" +
+                "    id              BIGSERIAL      NOT NULL primary key,\n" +
                 "    name                varchar(45) NOT NULL,\n" +
-                "    nick_name                varchar(45) NOT NULL,\n" +
+                "    nick_name                varchar(45) NOT NULL UNIQUE,\n" +
                 "    email               varchar(45) NOT NULL UNIQUE,\n" +
-                "    password            varchar(45) NOT NULL,\n" +
-                "    public_count        float DEFAULT NULL,\n" +
-                "    subscriptions_count float DEFAULT NULL,\n" +
-                "    subscribers_count   float DEFAULT NULL\n" +
-                "\n" +
-                ");\n" +
+                "    password            varchar(100) NOT NULL,\n" +
+                "    public_count        float DEFAULT 0,\n" +
+                "    subscriptions_count float DEFAULT 0,\n" +
+                "    subscribers_count   float DEFAULT 0,\n" +
+                "    enabled             boolean DEFAULT true NOT NULL );\n" +
 
                 "CREATE TABLE publications\n" +
                 "(\n" +
@@ -65,6 +69,11 @@ public class CreateDB {
                 "            ON DELETE CASCADE ON UPDATE CASCADE,\n" +
                 "    date           timestamp DEFAULT NULL\n" +
                 ");\n" +
+                        "CREATE TABLE authorities (\n" +
+                "    username  varchar   NOT NULL primary key \n" +
+                "        constraint authorities_users_fk REFERENCES users (email)\n" +
+                "        ON DELETE CASCADE ON UPDATE CASCADE,\n" +
+                "    authority varchar(50)    NOT NULL );\n" +
 
                 "CREATE TABLE subscriptions\n" +
                 "(\n" +
@@ -81,15 +90,25 @@ public class CreateDB {
     }
 
     public void addTestDataDB(){
+        String qwerty = passwordEncoder.encode("qwerty");
     String query="\n" +
             "INSERT INTO users\n" +
-            "    VALUES(11, 'Argen','Argen', 'argen@gmail.com', 'qwerty', 3, 3,3);"+
+            "    VALUES(11, 'Argen','Argen', 'argen@gmail.com', '" + qwerty + "', 3, 3,3, true);"+
             "\n" +
             " INSERT INTO users\n" +
-            "    VALUES(12, 'Alex', 'Alex', 'alex@gmail.com', 'qwerty', 3, 3,3);"+
+            "    VALUES(12, 'Alex', 'Alex', 'alex@gmail.com', '" + qwerty + "', 3, 3,3, true);"+
             "\n" +
             " INSERT INTO users\n" +
-            "    VALUES(13, 'Brain','Brain', 'b@gmail.com', 'qwerty', 3, 3,3);"+
+            "    VALUES(13, 'Brain','Brain', 'b@gmail.com', '" + qwerty + "', 3, 3,3, true);"+
+            "\n" +
+            "INSERT INTO authorities\n" +
+            "    VALUES('argen@gmail.com', 'ROLE_USER');"+
+            "\n" +
+            "INSERT INTO authorities\n" +
+            "    VALUES('alex@gmail.com', 'ROLE_USER');"+
+            "\n" +
+            "INSERT INTO authorities\n" +
+            "    VALUES('b@gmail.com', 'ROLE_USER');"+
             "\n" +
             "insert into publications\n" +
             "values ( 11,11,'images/1.jpeg', '',date(now()));\n" +

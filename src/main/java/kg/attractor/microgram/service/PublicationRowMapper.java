@@ -22,6 +22,7 @@ public class PublicationRowMapper implements RowMapper<Publication> {
         user.setPublicCount(rs.getInt("public_count"));
         user.setSubscriptionsCount(rs.getInt("subscriptions_count"));
         user.setSubscribersCount(rs.getInt("subscribers_count"));
+        user.setEnabled(rs.getBoolean("enabled"));
         publication.setUser(user);
         publication.setImageLink(rs.getString("imagelink"));
         publication.setDescription(rs.getString("description"));

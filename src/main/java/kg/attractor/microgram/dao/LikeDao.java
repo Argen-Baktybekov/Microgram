@@ -15,9 +15,10 @@ public class LikeDao {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public List<Like> getLike(int userId, int publicationId) {
-        String query = "select * from likes where user_id ="+userId+" and publication_id ="+publicationId;
-        return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Like.class));
+    public Boolean getLike(int userId, int publicationId) {
+        String query = "select count(*) from likes where user_id ="+userId+" and publication_id ="+publicationId;
+        Integer cnt =jdbcTemplate.queryForObject(query, Integer.class);
+        return cnt!=null && cnt>0;
     }
 
 }

@@ -18,4 +18,12 @@ public class LikeService {
         return likeDao.getLike(userId, publicationId);
     }
 
+    public String addLike(int userId, Integer pubId) {
+        try {
+            likeDao.addLike(userId, pubId);
+            return "Ok";
+        }catch (Exception e){
+            return e.getMessage();
+        }
+    }
 }

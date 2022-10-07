@@ -59,7 +59,7 @@ public class UserService {
         userDao.addUser(user);
         return "Ok";
         }catch (Exception e){
-           return e.getMessage();
+           return "ERROR";
         }
     }
 
@@ -72,7 +72,7 @@ public class UserService {
                 throw new SQLException();
             }
         }catch (SQLException e){
-            return e.getMessage();
+            return "ERROR";
         }
     }
 }

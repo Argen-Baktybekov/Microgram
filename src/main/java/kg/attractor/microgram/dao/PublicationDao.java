@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,13 +20,6 @@ public class PublicationDao {
     private final JdbcTemplate jdbcTemplate;
 
     public List<Publication> getAllPublication(int id) {
-        String query = "select * from publications p\n" +
-                "inner join users u on p.user_id = u.id\n" +
-                "where p.user_id !="+id;
-        return jdbcTemplate.query(query, new PublicationRowMapper());
-    }
-
-    public List<Publication> getMyListPublication(int id) {
         String query = "select * from publications p\n" +
                 "inner join users u on p.user_id = u.id\n" +
                 "where p.user_id ="+id;
@@ -40,21 +34,28 @@ public class PublicationDao {
     }
 
 
-    public void addPublication(PublicationDto publicationDto) {
-        String query ="INSERT INTO users ( user_id, imagelink, description, date)\n" +
+    public void addPublication(int userId, String imageLink, String description) throws SQLException {
+        String query ="INSERT INTO publications ( user_id, imagelink, description, date)\n" +
         "    VALUES( ?, ?, ?, ?);";
-        jdbcTemplate.update(conn->{
+       int update = jdbcTemplate.update(conn->{
             PreparedStatement ps = conn.prepareStatement(query);
-//            ps.setInt(1, "user_id");  //auth
-            ps.setString(2, publicationDto.getImageLink());
-            ps.setString(3, publicationDto.getDescription());
+            ps.setInt(1, userId);  //auth
+            ps.setString(2, imageLink);
+            ps.setString(3, description);
             ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
             return ps;
         });
+        if (update == 0){
+            throw new SQLException();
+        }
     }
 
-    public void deletePublication(int userId, int pubId) {
+    public void deletePublication(int userId, int pubId) throws SQLException{
         String query = "delete from publications where id = ? and user_id=? ;";
-        jdbcTemplate.update(query,pubId, userId);
+        int update = jdbcTemplate.update(query, pubId, userId);
+
+        if (update == 0){
+            throw new SQLException();
+        }
     }
 }

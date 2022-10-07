@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class UserController {
 private final UserService service;
@@ -20,7 +20,6 @@ private final UserService service;
     public ResponseEntity<List<UserDto>> users() {
         return new ResponseEntity<>(service.getUsers(), HttpStatus.OK);
     }
-
     @GetMapping("/user/{email}")
     public ResponseEntity<UserDto> userByEmail(@PathVariable String email){
         return new ResponseEntity<>(service.getUsersByEmail(email), HttpStatus.OK);

@@ -24,7 +24,7 @@ public class DBConnection {
             createDB.createDB();
             return "OK";
         }catch (Exception e){
-          return e.getMessage();
+          return "Data Base already exist";
         }
     }
     public String addTestData(){
@@ -32,7 +32,7 @@ public class DBConnection {
             createDB.addTestDataDB();
             return "OK";
         }catch (Exception e){
-          return e.getMessage();
+          return "Data Base already exist";
         }
     }
 }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -40,14 +41,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/publications/add/*").fullyAuthenticated()
-                .antMatchers("/publications/delete/*").fullyAuthenticated()
-                .antMatchers("/comment/add/*").fullyAuthenticated()
-                .antMatchers("/comment/delete/*").fullyAuthenticated()
-                .antMatchers("/subscriptions/add/*").fullyAuthenticated()
-                .antMatchers("/subscriptions/delete/*").fullyAuthenticated()
-                .antMatchers("/like/add/*").fullyAuthenticated()
-                .antMatchers("/like/delete/*").fullyAuthenticated();
+                .antMatchers(HttpMethod.POST, "/publications").fullyAuthenticated()
+                .antMatchers(HttpMethod.GET, "/publications/my").fullyAuthenticated()
+                .antMatchers(HttpMethod.GET, "/publications/forMe").fullyAuthenticated()
+                .antMatchers(HttpMethod.DELETE,"/publications").fullyAuthenticated()
+                .antMatchers(HttpMethod.POST,"/comment").fullyAuthenticated()
+                .antMatchers(HttpMethod.DELETE,"/comment").fullyAuthenticated()
+                .antMatchers(HttpMethod.POST,"/subscriptions").fullyAuthenticated()
+                .antMatchers(HttpMethod.DELETE,"/subscriptions").fullyAuthenticated()
+                .antMatchers(HttpMethod.POST,"/like").fullyAuthenticated()
+                .antMatchers(HttpMethod.DELETE,"/like").fullyAuthenticated();
 
         http.authorizeRequests()
                 .anyRequest()

@@ -3,6 +3,7 @@ package kg.attractor.microgram.dao;
 import kg.attractor.microgram.dto.CommentDto;
 import kg.attractor.microgram.entity.Comment;
 import kg.attractor.microgram.entity.Publication;
+import kg.attractor.microgram.service.CommentRowMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -48,9 +49,13 @@ public class CommentDao {
         }
     }
 
-    public List<Comment> getAllComments(int pubId) {
-        String query = "select * from comments where publication_id = ? ;";
-        // NEED CUSTOM RowMapper
-       return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Comment.class), pubId);
+    public List<CommentDto> getAllComments(int pubId) {
+        String query = "select * from comments c \n " +
+                "inner join users u on c.user_id = u.id\n" +
+                "inner join publications p on c.publication_id = p.id\n" +
+                "inner join users us on p.user_id = us.id\n" +
+                "where p.id = ? ;";
+
+       return jdbcTemplate.query(query, new CommentRowMapper(), pubId);
     }
 }

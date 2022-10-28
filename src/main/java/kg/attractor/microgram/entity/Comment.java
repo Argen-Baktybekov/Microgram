@@ -1,10 +1,16 @@
 package kg.attractor.microgram.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.security.PrivateKey;
 import java.time.LocalDateTime;
 @Data
+//@AllArgsConstructor
+//@NoArgsConstructor
+@RequiredArgsConstructor
 public class Comment {
     private int id;
     private User user;

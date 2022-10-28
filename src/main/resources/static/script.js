@@ -1,7 +1,7 @@
 'use strict'
 
 
-const BASE_URL = "http://localhost:8082";
+const BASE_URL = "http://localhost:8080";
 // const axios = require('axios');
 
 
@@ -75,6 +75,7 @@ function createCommentElement(comment) {
     newComment.id = comment.id;
     newComment.innerHTML = '<p> ' + comment.user.name + ': ' + comment.text + '</p>' +
         '<p> ' +timeFormat(comment.dateTime) + '</p>';
+
     return newComment;
 }
 
@@ -181,6 +182,11 @@ function addChatFunction(postElement){
     const chatElement = postElement.getElementsByClassName("chat")[0];
     chatElement.addEventListener("click", function (event){
         event.preventDefault();
+
+        let id = postElement.getAttribute("id")
+        getComment(id);
+
+
         const chatform = event.target.parentElement.parentElement.lastElementChild;
         if (chatform.hidden) {
             chatform.hidden = false;
@@ -197,9 +203,9 @@ function addChatFunction(postElement){
         sendComment(data);
     })
 }
-
-function sendComment(formData) {
-    axios.post(BASE_URL + '/comment/', formData)
+function getComment(id){
+    let postId = id.replace(/post/gi, "");
+    axios.get(BASE_URL + '/comment/'+postId)
         .then(function (response) {
             addComment(response.data);
             return response.data;
@@ -208,9 +214,24 @@ function sendComment(formData) {
             console.log('error from back: ' + error);
         });
 }
-function addComment(comment) {
-    const commentElement = createCommentElement(comment);
-    document.getElementById("cl"+comment.publication.id).append(commentElement);
+function sendComment(formData) {
+    axios.post(BASE_URL + '/comment/', formData)
+        .then(function (response) {
+            console.log(response.data)
+            addComment(response.data);
+            return response.data;
+        })
+        .catch(function (error) {
+            console.log('error from back: ' + error);
+        });
+}
+function addComment(comments) {
+    // console.log(comment)
+    comments.forEach((comment)=>{
+        const commentElement = createCommentElement(comment);
+        document.getElementById("cl"+comment.publication.id).append(commentElement);
+    });
+
 }
 
     const splashBtn = document.getElementById("splashBtn");

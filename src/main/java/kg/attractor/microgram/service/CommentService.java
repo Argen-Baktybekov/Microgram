@@ -51,13 +51,13 @@ public class CommentService {
     }
 
     public List<CommentDto> getComments(int pubId) {
-        List<Comment> comments = commentDao.getAllComments(pubId);
-        List<CommentDto> commentsDto = new ArrayList<>();
-        for (Comment cmt:comments) {
-            CommentDto commentDto = makeCommentDto(cmt);
-            commentsDto.add(commentDto);
-        }
-        return commentsDto;
+        List<CommentDto> comments = commentDao.getAllComments(pubId);
+//        List<CommentDto> commentsDto = new ArrayList<>();
+//        for (Comment cmt:comments) {
+//            CommentDto commentDto = makeCommentDto(cmt);
+//            commentsDto.add(commentDto);
+//        }
+        return comments;
     }
 
     public static CommentDto makeCommentDto(Comment comment){

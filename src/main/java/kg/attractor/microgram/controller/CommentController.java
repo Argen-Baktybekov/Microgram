@@ -3,11 +3,11 @@ package kg.attractor.microgram.controller;
 import kg.attractor.microgram.dto.CommentDto;
 import kg.attractor.microgram.dto.PublicationDto;
 import kg.attractor.microgram.service.CommentService;
-import kg.attractor.microgram.service.UserService;
+//import kg.attractor.microgram.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+//import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService service;
-    private final UserService userService;
+//    private final UserService userService;
 
     @GetMapping("/{pubId}")
 
@@ -28,24 +28,25 @@ public class CommentController {
         return new ResponseEntity<>(service.getComments(pubId), HttpStatus.OK);
     }
 
-    @PostMapping("/{pubId}")
-    public ResponseEntity<String> addComment(@PathVariable Integer pubId,
-                                             Authentication authentication,
+    @PostMapping("/")
+    public ResponseEntity<?> addComment(@RequestParam Integer postId,
+                                             @RequestParam Integer userId,
+//                                             Authentication authentication,
                                              @RequestParam String text) {
-        String email = authentication.getName();
+//        String email = authentication.getName();
         if (text != null) {
-            int userId = userService.getUsersByEmail(email).getId();
-            return new ResponseEntity<>(service.addComment(pubId, userId, text), HttpStatus.OK);
+//            int userId = userService.getUsersByEmail(email).getId();
+            return new ResponseEntity<>(service.addComment(postId, userId, text), HttpStatus.OK);
         }
         return new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
     }
 
-    @DeleteMapping("/{commentId}")
-    public ResponseEntity<String> deleteComment(@PathVariable Integer commentId,
-                                                Authentication authentication) {
-        String email = authentication.getName();
-        int userId = userService.getUsersByEmail(email).getId();
-        return new ResponseEntity<>(service.deleteComment(commentId, userId), HttpStatus.OK);
-    }
+//    @DeleteMapping("/{commentId}")
+//    public ResponseEntity<String> deleteComment(@PathVariable Integer commentId,
+//                                                Authentication authentication) {
+//        String email = authentication.getName();
+//        int userId = userService.getUsersByEmail(email).getId();
+//        return new ResponseEntity<>(service.deleteComment(commentId, userId), HttpStatus.OK);
+//    }
 
 }

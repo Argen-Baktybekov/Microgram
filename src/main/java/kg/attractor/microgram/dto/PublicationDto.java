@@ -1,6 +1,5 @@
 package kg.attractor.microgram.dto;
 
-import kg.attractor.microgram.entity.User;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -11,5 +10,5 @@ public class PublicationDto {
     private UserDto user;
     private String imageLink;
     private String description;
-    private LocalDateTime PublicationDateTime;
+    private LocalDateTime dateTime;
 }

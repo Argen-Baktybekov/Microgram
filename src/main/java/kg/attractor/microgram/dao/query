@@ -1,0 +1,108 @@
+if not exist
+CREATE TABLE users
+(
+    id              SERIAL      NOT NULL primary key,
+    name                varchar(45) NOT NULL,
+    email               varchar(45) NOT NULL UNIQUE,
+    password            varchar(45) NOT NULL,
+    public_count        float DEFAULT NULL,
+    subscriptions_count float DEFAULT NULL,
+    subscribers_count   float DEFAULT NULL
+
+);
+if not exist
+CREATE TABLE publications
+(
+    id          SERIAL NOT NULL primary key,
+    user_id     int    NOT NULL
+                    constraint publication_user_fk REFERENCES users (id)
+                    ON DELETE CASCADE ON UPDATE CASCADE,
+    imageLink   varchar(100) DEFAULT NULL,
+    description text,
+    date        timestamp    DEFAULT NULL
+);
+if not exist
+CREATE TABLE comments
+(
+    id     SERIAL NOT NULL primary key ,
+    user_id         int    NOT NULL
+        constraint comment_user_fk REFERENCES users (id)
+            ON DELETE CASCADE ON UPDATE CASCADE,
+    publication_id int    NOT NULL
+        constraint comment_publication_fk REFERENCES publications (id)
+            ON DELETE CASCADE ON UPDATE CASCADE,
+    text           text,
+    date           timestamp DEFAULT NULL
+);
+if not exist
+CREATE TABLE likes
+(
+    id        SERIAL NOT NULL primary key ,
+    user_id         int    NOT NULL
+        constraint like_user_fk REFERENCES users (id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    publication_id int    NOT NULL
+        constraint like_publication_fk REFERENCES publications (id)
+            ON DELETE CASCADE ON UPDATE CASCADE,
+    date           timestamp DEFAULT NULL
+);
+
+
+
+if not exist
+CREATE TABLE subscriptions
+(
+    id     SERIAL not null primary key ,
+    user_id               int       NOT NULL
+        constraint subscriptions_user_fk REFERENCES users (id)
+            ON DELETE CASCADE ON UPDATE CASCADE,
+    subscript_user_id int       NOT NULL
+        constraint subscriptions_users_fk REFERENCES users (id)
+            ON DELETE CASCADE ON UPDATE CASCADE,
+    date                 timestamp NOT NULL
+);
+
+   INSERT INTO users
+    VALUES(10, 'Brian', 'br@gmail.com', 'qwerty', 0, 0,0);
+
+
+# Вставка товара 1
+INSERT INTO products (category_id, brand_id, product, price, description)
+VALUES ((SELECT id FROM categories where category='HDD'),
+(SELECT id FROM brands where brand='Samsung'),
+'S1 HDD 1T, 7200 rpm', 125, '');
+
+#Вставка поступлений товара actions 9
+INSERT INTO actions (action_date, product_id, supplier_id, qty, price)
+VALUES ('2015-08-14 15:30:00',
+(select id from products where product='S5 HDD 500Gb, 7200rpm'), # product
+(select id from suppliers where supplier='Silk Road'), # supplier
+50, # qty
+98);
+
+
+    INSERT INTO users
+    VALUES(2, 'A', 'a@gmail.com', 'qwerty', 0, 0,0);
+
+select * from users;
+
+insert into publications
+values ( 3,1,'images/1.jpeg', '',date(now()));
+
+insert into publications
+values ( 4,2,'images/2.jpeg', '',date(now()));
+
+insert into subscriptions
+values (1, 1, 10, date(now()));
+
+insert into subscriptions
+values (2, 1, 2, date(now()));
+
+select * from publications where user_id !=1;
+
+select * from publications where user_id =1;
+
+select * from publications where user_id in (
+select subscript_user_id from subscriptions where subscriptions.user_id = 1);
+
+select * from likes where user_id =1 and publication_id =1;

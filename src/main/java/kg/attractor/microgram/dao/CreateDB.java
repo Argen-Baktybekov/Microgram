@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class CreateDB {
     private final JdbcTemplate jdbcTemplate;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
 
 
     public void createDB(){
@@ -90,7 +90,8 @@ public class CreateDB {
     }
 
     public void addTestDataDB(){
-        String qwerty = passwordEncoder.encode("qwerty");
+//        String qwerty = passwordEncoder.encode("qwerty");
+        String qwerty = "qwerty";
     String query="\n" +
             "INSERT INTO users\n" +
             "    VALUES(11, 'Argen','Argen', 'argen@gmail.com', '" + qwerty + "', 3, 3,3, true);"+
@@ -111,31 +112,31 @@ public class CreateDB {
             "    VALUES('b@gmail.com', 'ROLE_USER');"+
             "\n" +
             "insert into publications\n" +
-            "values ( 11,11,'images/1.jpeg', '',date(now()));\n" +
+            "values ( 11,11,'postfile/1.jpeg', '',date(now()));\n" +
             "\n" +
             "insert into publications\n" +
-            "values ( 12,11,'images/2.jpeg', '',date(now()));\n" +
+            "values ( 12,11,'postfile/2.jpeg', '',date(now()));\n" +
             "\n" +
             "insert into publications\n" +
-            "values ( 13,11,'images/3.jpeg', '',date(now()));\n" +
+            "values ( 13,11,'postfile/3.jpeg', '',date(now()));\n" +
             "\n" +
             "insert into publications\n" +
-            "values ( 14,12,'images/4.jpeg', '',date(now()));\n" +
+            "values ( 14,12,'postfile/4.jpeg', '',date(now()));\n" +
             "\n" +
             "insert into publications\n" +
-            "values ( 15,12,'images/5.jpeg', '',date(now()));\n" +
+            "values ( 15,12,'postfile/5.jpeg', '',date(now()));\n" +
             "\n" +
             "insert into publications\n" +
-            "values ( 16,12,'images/6.jpeg', '',date(now()));\n" +
+            "values ( 16,12,'postfile/6.jpeg', '',date(now()));\n" +
             "\n" +
             "insert into publications\n" +
-            "values ( 17,13,'images/6.jpeg', '',date(now()));\n" +
+            "values ( 17,13,'postfile/6.jpeg', '',date(now()));\n" +
             "\n" +
             "insert into publications\n" +
-            "values ( 18,13,'images/6.jpeg', '',date(now()));\n" +
+            "values ( 18,13,'postfile/6.jpeg', '',date(now()));\n" +
             "\n" +
             "insert into publications\n" +
-            "values ( 19,13,'images/6.jpeg', '',date(now()));\n" +
+            "values ( 19,13,'postfile/6.jpeg', '',date(now()));\n" +
             "\n" +
             "insert into subscriptions\n" +
             "values (11, 11, 12, date(now()));\n" +

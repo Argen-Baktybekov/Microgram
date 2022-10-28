@@ -1,11 +1,11 @@
 package kg.attractor.microgram.entity;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Data
 public class Publication {
@@ -15,13 +15,13 @@ public class Publication {
     private String description;
     private LocalDateTime PublicationDateTime;
 
-    public Publication(int id, User user, String imageLink, String description, LocalDateTime publicationDateTime) {
-        this.id = id;
-        this.user = user;
-        this.imageLink = imageLink;
-        this.description = description;
-        PublicationDateTime = publicationDateTime;
-    }
+//    public Publication(int id, User user, String imageLink, String description, LocalDateTime publicationDateTime) {
+//        this.id = id;
+//        this.user = user;
+//        this.imageLink = imageLink;
+//        this.description = description;
+//        PublicationDateTime = publicationDateTime;
+//    }
 
     public int getId() {
         return id;

@@ -1,17 +1,20 @@
 package kg.attractor.microgram.dto;
 
-import kg.attractor.microgram.entity.Publication;
-import kg.attractor.microgram.entity.User;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
+import lombok.*;
+
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
+@Builder
+
 public class CommentDto {
-    private int id;
+    private long id;
     private UserDto user;
     private PublicationDto publication;
     private String text;
-    private LocalDateTime CommentDateTime;
+    private Timestamp dateTime;
 }

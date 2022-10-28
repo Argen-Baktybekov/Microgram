@@ -1,7 +1,7 @@
 package kg.attractor.microgram.controller;
 
 import kg.attractor.microgram.service.DBConnection;
-import kg.attractor.microgram.service.UserService;
+//import kg.attractor.microgram.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ConnectionController {
     private final DBConnection dbConnection;
-    final UserService dBservice;
+//    final UserService dBservice;
 
     @GetMapping("/create")
     public ResponseEntity<String> createTable(){

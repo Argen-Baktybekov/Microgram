@@ -1,39 +1,6 @@
 'use strict'
 
-
-const BASE_URL = "http://localhost:8080";
-// const axios = require('axios');
-
-
-const user1 = {
-    id: 11,
-    name: 'argen',
-    age: 26,
-    email: 'argen@test',
-    isAuthorised: true
-}
-
-const post1 = {
-    id: 100,
-    user: user1,
-    description: 'Hello JS',
-    imageLink: 'postfile/1.jpeg',
-    likes: 1,
-    dateTime: "14-10-2022"
-}
-
-const comment1 = {
-    id: 1,
-    postId: post1.id,
-    userName: user1.name,
-    text: "Good post!",
-    date: "14-10-2022"
-}
-
-const posts = [
-    post1
-]
-
+const BASE_URL = "http://172.29.176.200:8080";
 
 function changeAuthStatus(user) {
     user.isAuthorised = !user.isAuthorised;
@@ -50,15 +17,16 @@ function addLike(postId) {
 
 
 //HomeWork-58
+const splashBtn = document.getElementById("splashBtn");
+splashBtn.addEventListener("click", hideSplashScreen);
 const splash = document.getElementsByClassName("splash");
-
 function showSplashScreen() {
     splash[0].hidden = false;
 }
-
 function hideSplashScreen() {
     splash[0].hidden = true;
 }
+
 
 function timeFormat(timestamp) {
     const date = new Date(timestamp)
@@ -75,7 +43,6 @@ function createCommentElement(comment) {
     newComment.id = comment.id;
     newComment.innerHTML = '<p> ' + comment.user.name + ': ' + comment.text + '</p>' +
         '<p> ' +timeFormat(comment.dateTime) + '</p>';
-
     return newComment;
 }
 
@@ -121,14 +88,6 @@ function createPostElement(post) {
     return newPost;
 }
 
-
-function addPost(post) {
-    const postElement = createPostElement(post);
-    addLikeFunction(postElement);
-    addChatFunction(postElement);
-    addBookmarkFunction(postElement);
-    document.getElementsByClassName("posts")[0].prepend(postElement);
-}
 
 function addLikeFunction(postElement){
     const likeElements = postElement.getElementsByClassName("like");
@@ -183,15 +142,14 @@ function addChatFunction(postElement){
     chatElement.addEventListener("click", function (event){
         event.preventDefault();
 
-        let id = postElement.getAttribute("id")
-        getComment(id);
-
-
         const chatform = event.target.parentElement.parentElement.lastElementChild;
         if (chatform.hidden) {
             chatform.hidden = false;
+            let id = postElement.getAttribute("id");
+            getComment(id);
         } else {
             chatform.hidden = true;
+            chatform.firstElementChild.innerHTML="";
         }
     });
 
@@ -203,17 +161,16 @@ function addChatFunction(postElement){
         sendComment(data);
     })
 }
-function getComment(id){
-    let postId = id.replace(/post/gi, "");
-    axios.get(BASE_URL + '/comment/'+postId)
-        .then(function (response) {
-            addComment(response.data);
-            return response.data;
-        })
-        .catch(function (error) {
-            console.log('error from back: ' + error);
-        });
+
+
+function addPost(post) {
+    const postElement = createPostElement(post);
+    addLikeFunction(postElement);
+    addChatFunction(postElement);
+    addBookmarkFunction(postElement);
+    document.getElementsByClassName("posts")[0].prepend(postElement);
 }
+
 function sendComment(formData) {
     axios.post(BASE_URL + '/comment/', formData)
         .then(function (response) {
@@ -225,17 +182,28 @@ function sendComment(formData) {
             console.log('error from back: ' + error);
         });
 }
-function addComment(comments) {
-    // console.log(comment)
+function getComment(id){
+    let postId = id.replace(/post/gi, "");
+    axios.get(BASE_URL + '/comment/'+postId)
+        .then(function (response) {
+            addComments(response.data);
+            return response.data;
+        })
+        .catch(function (error) {
+            console.log('error from back: ' + error);
+        });
+}
+function addComments(comments) {
     comments.forEach((comment)=>{
         const commentElement = createCommentElement(comment);
         document.getElementById("cl"+comment.publication.id).append(commentElement);
     });
-
+}
+function addComment(comment) {
+        const commentElement = createCommentElement(comment);
+        document.getElementById("cl"+comment.publication.id).append(commentElement);
 }
 
-    const splashBtn = document.getElementById("splashBtn");
-    splashBtn.addEventListener("click", hideSplashScreen);
 
 
     var myModal = document.getElementById('newpost');
@@ -244,23 +212,16 @@ function addComment(comments) {
     myModal.addEventListener('shown.bs.modal', function () {
         myInput.focus()
     });
-    
-    let sendpost = document.getElementById('addpost');
-
-
 
     const sendPostBtn = document.getElementById('sendform');
-    sendPostBtn.addEventListener('submit', addPostHandler);
-
-    function addPostHandler(e) {
+    sendPostBtn.addEventListener('submit', function (e){
         e.preventDefault();
         const form = e.target;
-        const data = new FormData(form);
-        let postFromDB = send(data);
-        console.log(postFromDB);
-    }
+        const formData = new FormData(form);
+        sendPost(formData);
+    });
 
-    function send(formData) {
+     function sendPost(formData) {
         axios.post(BASE_URL + '/publications/add', formData,
             {
                 headers: {
@@ -269,34 +230,27 @@ function addComment(comments) {
             }
         )
             .then(function (response) {
-                console.log('from back: ' + response.data.user.name)
-                //  addPost(createPostElement());
+                // console.log('from back: ' + response.data.user.name)
                 addPost(response.data);
-                return response.data;
             })
             .catch(function (error) {
                 console.log('error from back: ' + error);
             });
     }
 
-function addAllPosts(){
+function getAllPosts(){
     axios.get(BASE_URL+'/publications/')
         .then(function (response) {
-            // for (let i = 1; i < 5; i++){
-            //     addPost(response.data[i])
-            // }
-
             response.data.forEach(
                 (post) => { addPost(post) });
-
-            console.log(response)
+            // console.log(response)
         })
         .catch(function (error) {
             console.log(error);
         })
 }
 
-addAllPosts();
+getAllPosts();
 
       
 

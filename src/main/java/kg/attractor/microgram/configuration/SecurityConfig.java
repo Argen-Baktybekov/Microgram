@@ -37,20 +37,20 @@
 //                        + "from authorities "
 //                        + "where username = ?");
 //    }
-//
+////
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
-////        http.authorizeRequests()
-////                .antMatchers(HttpMethod.POST, "/publications").fullyAuthenticated()
-////                .antMatchers(HttpMethod.GET, "/publications/my").fullyAuthenticated()
-////                .antMatchers(HttpMethod.GET, "/publications/forMe").fullyAuthenticated()
-////                .antMatchers(HttpMethod.DELETE,"/publications").fullyAuthenticated()
-////                .antMatchers(HttpMethod.POST,"/comment").fullyAuthenticated()
-////                .antMatchers(HttpMethod.DELETE,"/comment").fullyAuthenticated()
-////                .antMatchers(HttpMethod.POST,"/subscriptions").fullyAuthenticated()
-////                .antMatchers(HttpMethod.DELETE,"/subscriptions").fullyAuthenticated()
-////                .antMatchers(HttpMethod.POST,"/like").fullyAuthenticated()
-////                .antMatchers(HttpMethod.DELETE,"/like").fullyAuthenticated();
+//        http.authorizeRequests()
+//                .antMatchers(HttpMethod.POST, "/publications").fullyAuthenticated()
+//                .antMatchers(HttpMethod.GET, "/publications/my").fullyAuthenticated()
+//                .antMatchers(HttpMethod.GET, "/publications/forMe").fullyAuthenticated()
+//                .antMatchers(HttpMethod.DELETE,"/publications").fullyAuthenticated()
+//                .antMatchers(HttpMethod.POST,"/comment").fullyAuthenticated()
+//                .antMatchers(HttpMethod.DELETE,"/comment").fullyAuthenticated()
+//                .antMatchers(HttpMethod.POST,"/subscriptions").fullyAuthenticated()
+//                .antMatchers(HttpMethod.DELETE,"/subscriptions").fullyAuthenticated()
+//                .antMatchers(HttpMethod.POST,"/like").fullyAuthenticated()
+//                .antMatchers(HttpMethod.DELETE,"/like").fullyAuthenticated();
 //
 //        http.authorizeRequests()
 //                .anyRequest()

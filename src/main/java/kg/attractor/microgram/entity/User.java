@@ -18,8 +18,8 @@ public class User {
     private int subscribersCount;
     private boolean enabled;
 
-    public User(int id, String name, String email, String password) {
-        this.id = id;
+    public User( String name, String email, String password) {
+        this.id = 0;
         this.name = name;
         this.email = email;
         this.password = password;

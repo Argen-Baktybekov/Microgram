@@ -1,6 +1,6 @@
 'use strict'
 
-const BASE_URL = "http://172.29.176.200:8080";
+const BASE_URL = "http://172.29.176.200:8081";
 
 function changeAuthStatus(user) {
     user.isAuthorised = !user.isAuthorised;
@@ -74,7 +74,7 @@ function createPostElement(post) {
         
     '<form class="commentForm">' +
     '<div class="mb-3">'+
-          '<input type="textarea" class="form-control"  id="commenttext" name="text">'+
+          '<input type="textarea" class="form-control"  id="commenttext" name="text" required>'+
     ' </div>' +
     '<div class="mb-3">' +
         '<input type="text" class="form-control " hidden  value="11" name="userId">' +
@@ -159,6 +159,7 @@ function addChatFunction(postElement){
         const form = event.target;
         const data = new FormData(form);
         sendComment(data);
+        CommentForm.firstElementChild.firstElementChild.value="";
     })
 }
 
@@ -205,6 +206,42 @@ function addComment(comment) {
 }
 
 
+var register = document.getElementById('signup')
+    var myName = document.getElementById('name')
+    
+register.addEventListener('shown.bs.modal', function () {
+    myName.focus()
+});
+
+const newUser = document.getElementById('registerform');
+newUser.addEventListener('submit', function (e){
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+    var object = {};
+    formData.forEach(function(value, key){
+        object[key] = value;
+    });
+    var json = JSON.stringify(object);
+    console.log(json);
+    sendNewUser(json);
+});
+
+function sendNewUser(formData) {
+    axios.post(BASE_URL + '/user/add', formData,{
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+
+
+        .then(function (response) {
+            alert('from back: ' + response.data)
+        })
+        .catch(function (error) {
+            alert('error from back: ' + error);
+        });
+}
 
     var myModal = document.getElementById('newpost');
     var myInput = document.getElementById('postfile');
@@ -212,6 +249,10 @@ function addComment(comment) {
     myModal.addEventListener('shown.bs.modal', function () {
         myInput.focus()
     });
+
+
+
+
 
     const sendPostBtn = document.getElementById('sendform');
     sendPostBtn.addEventListener('submit', function (e){

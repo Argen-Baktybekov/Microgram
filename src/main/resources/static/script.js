@@ -234,12 +234,11 @@ function sendNewUser(formData) {
         }
     })
 
-
         .then(function (response) {
-            alert('from back: ' + response.data)
+            alert('User: ' + response.data)
         })
         .catch(function (error) {
-            alert('error from back: ' + error);
+            alert('User не создан: ' + error);
         });
 }
 

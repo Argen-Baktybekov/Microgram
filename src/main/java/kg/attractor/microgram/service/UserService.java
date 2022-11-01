@@ -57,9 +57,10 @@ public class UserService {
     public String addUser(User user) {
         try {
         userDao.addUser(user);
-        return "Ok";
+        return "created";
         }catch (Exception e){
-           return "ERROR";
+            e.printStackTrace();
+           return "name or email already exists";
         }
     }
 

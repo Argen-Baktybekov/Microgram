@@ -5,7 +5,7 @@ import kg.attractor.microgram.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserDao {
     private final JdbcTemplate jdbcTemplate;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public List<User> getAllUsers(){
         String query = "select * from users";
@@ -43,8 +43,8 @@ public class UserDao {
             ps.setString(1, user.getName());
             ps.setString(2, user.getNickName());
             ps.setString(3, user.getEmail());
-//            ps.setString(4, passwordEncoder.encode(user.getPassword()));
-            ps.setString(4, user.getPassword());
+            ps.setString(4, passwordEncoder.encode(user.getPassword()));
+//            ps.setString(4, user.getPassword());
 
             return ps;
         });

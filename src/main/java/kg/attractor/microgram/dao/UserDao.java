@@ -24,6 +24,7 @@ public class UserDao {
 
     public List<User> getUserByEmail(String email){
         String query = String.format("select * from users where email = '%s' ;", email) ;
+
         return jdbcTemplate.query(query, new BeanPropertyRowMapper<>(User.class));
     }
     public User getUserByName(String name){
@@ -43,8 +44,8 @@ public class UserDao {
             ps.setString(1, user.getName());
             ps.setString(2, user.getNickName());
             ps.setString(3, user.getEmail());
-            ps.setString(4, passwordEncoder.encode(user.getPassword()));
-//            ps.setString(4, user.getPassword());
+//            ps.setString(4, passwordEncoder.encode(user.getPassword()));
+            ps.setString(4, user.getPassword());
 
             return ps;
         });
@@ -70,8 +71,19 @@ public class UserDao {
 
     public User authUser(String email, String password) {
         String query = "select * from users where email = ? and password = ?";
-       return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(User.class), email, password);
+       return jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(User.class), email,password);
     }
+//    public User authUser(String email, String password) {
+//        String query = "select * from users where email = ?";
+//       User user = jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper<>(User.class), email);
+//
+//       if (passwordEncoder.matches(user.getPassword(), password)){
+//           return user;
+//       }
+//       return null;
+//    }
+
+
 
     public User getUserById(int userId) {
             String query = "select * from users where id = ?" ;

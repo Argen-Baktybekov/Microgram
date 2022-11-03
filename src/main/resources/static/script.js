@@ -1,10 +1,72 @@
 'use strict'
 
-const BASE_URL = "http://172.29.176.200:8081";
+const BASE_URL = "http://192.168.1.107:8080";
 
 function changeAuthStatus(user) {
     user.isAuthorised = !user.isAuthorised;
 }
+const authUser = localStorage.getItem('username');
+
+function checkAuth(){
+    if (authUser!=null){
+        hideSplashScreen();
+        createUser();
+    }else {
+        showSplashScreen();
+    }
+}
+
+function createUser(){
+   let authUserHtml = document.createElement('li');
+   authUserHtml.classList.add('nav-item');
+   authUserHtml.classList.add('ms-auto');
+
+   authUserHtml.innerHTML="<a class=\"nav-link\" href=\"#\">"+authUser+"</a>";
+    document.getElementById('navigation').firstElementChild.append(authUserHtml);
+}
+function dropUser(){
+    document.getElementById('navigation').firstElementChild.lastElementChild.innerHTML="";
+}
+
+const logout = document.getElementById("logout");
+logout.addEventListener('click', function (e){
+    showSplashScreen();
+    localStorage.removeItem('username');
+    dropUser();
+})
+
+const loginForm = document.getElementById("login");
+loginForm.addEventListener("submit", function (e) {
+    const form = e.target;
+    const formData = new FormData(form);
+    var object = {};
+    formData.forEach(function(value, key){
+        object[key] = value;
+    });
+    var json = JSON.stringify(object);
+    console.log(json);
+    // sendLogin(json);                                  //работает  без passwordEncoder
+    localStorage.setItem('username', object.email);
+    checkAuth()
+});
+
+function sendLogin(json) {
+    axios.post(BASE_URL + '/user/auth', json,{
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(function (response) {
+            if (response.data === "Ok"){
+                hideSplashScreen()
+            }
+            // alert('User: ' + response.data)
+        })
+        .catch(function (error) {
+            alert('User не найден: ' + error);
+        });
+}
+
 
 function addLike(postId) {
     posts.forEach(post => {
@@ -291,6 +353,8 @@ function getAllPosts(){
 }
 
 getAllPosts();
+checkAuth();
+
 
       
 

@@ -55,3 +55,10 @@ body{
   box-sizing: border-box;
   padding: 5px;
 }
+.login{
+  max-width: 500px;
+  margin: 20px auto 200px;
+  padding: 15px;
+  border: 5px solid rgb(9, 155, 28);
+  border-radius: 10px;
+}

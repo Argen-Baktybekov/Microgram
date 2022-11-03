@@ -45,8 +45,10 @@ private final UserService service;
         return new ResponseEntity<>(service.addUser(user), HttpStatus.OK);
     }
 
-    @PostMapping("/user/auth")
-    public ResponseEntity<String> authUser(@RequestParam String email,@RequestParam String password){
-        return new ResponseEntity<>(service.authUser(email, password), HttpStatus.OK);
+//    @PostMapping("/user/auth")
+    @PostMapping(value = "/user/auth", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<String> authUser(@RequestBody User user){
+//    public ResponseEntity<String> authUser(@RequestBody String email,@RequestBody String password){
+        return new ResponseEntity<>(service.authUser(user.getEmail(), user.getPassword()), HttpStatus.OK);
     }
 }

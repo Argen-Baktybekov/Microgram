@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-//import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class CreateDB {
     private final JdbcTemplate jdbcTemplate;
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
 
     public void createDB(){
@@ -94,13 +94,13 @@ public class CreateDB {
         String qwerty = "qwerty";
     String query="\n" +
             "INSERT INTO users\n" +
-            "    VALUES(11, 'Argen','Argen', 'argen@gmail.com', '" + qwerty + "', 3, 3,3, true);"+
+            "    VALUES(11, 'Argen','Argen', 'argen@gmail.com', '" +passwordEncoder.encode(qwerty) + "', 3, 3,3, true);"+
             "\n" +
             " INSERT INTO users\n" +
-            "    VALUES(12, 'Alex', 'Alex', 'alex@gmail.com', '" + qwerty + "', 3, 3,3, true);"+
+            "    VALUES(12, 'Alex', 'Alex', 'alex@gmail.com', '" + passwordEncoder.encode(qwerty)+ "', 3, 3,3, true);"+
             "\n" +
             " INSERT INTO users\n" +
-            "    VALUES(13, 'Brain','Brain', 'b@gmail.com', '" + qwerty + "', 3, 3,3, true);"+
+            "    VALUES(13, 'Brain','Brain', 'b@gmail.com', '" + passwordEncoder.encode(qwerty)+ "', 3, 3,3, true);"+
             "\n" +
             "INSERT INTO authorities\n" +
             "    VALUES('argen@gmail.com', 'ROLE_USER');"+

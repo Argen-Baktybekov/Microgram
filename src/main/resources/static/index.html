@@ -31,17 +31,16 @@
 							<a class="nav-link" href="#">Portfolio</a>
 						</li>
 						<li class="nav-item me-4">
-							<a class="nav-link" href="#">About Us</a>
+
+                            <span type="button" class="nav-link" data-bs-toggle="modal" data-bs-target="#newpost">
+                                new post
+                            </span>
 						</li>
-<!--						<li class="register">-->
-<!--              <button type="submit" class="btn-user ms-auto text-uppercase fw-bold"  data-bs-toggle="modal" data-bs-target="#signup">-->
-<!--                sign up-->
-<!--              </button>-->
-<!--						</li>-->
+					</li>
 					</ul>
 					<hr class="text-white">
-					<button type="button" class="btn btn-primary ms-auto text-uppercase fw-bold" data-bs-toggle="modal" data-bs-target="#newpost">
-            new post
+					<button type="button" id="logout" class="btn btn-danger ms-auto text-uppercase fw-bold" >
+                        <i class="bi bi-box-arrow-right"></i>
 					</button>
 				</div>
 			</div>
@@ -61,7 +60,26 @@
     <button type="submit" class="btn-user ms-auto text-uppercase fw-bold"  data-bs-toggle="modal" data-bs-target="#signup">
         sign up
     </button>
- </div>
+
+      <!--  -->
+      <div class="login" >
+        <form id="login">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+          </div>
+          
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    <!--  -->
+ </div>  
+
 
   
 <div class="modal fade" id="newpost" tabindex="-1" >
